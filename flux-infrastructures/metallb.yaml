@@ -1,0 +1,31 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: metallb-helm
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  path: ./metallb-system/helminstall
+  prune: true
+  force: false
+  sourceRef:
+    kind: GitRepository
+    name: flux-infrastructures
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: metadata-resources
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  path: ./metallb-system/crd-resources
+  prune: true
+  force: false
+  dependsOn:
+    - name: metallb-helm
+      namespace: flux-system
+  sourceRef:
+    kind: GitRepository
+    name: flux-infrastructures

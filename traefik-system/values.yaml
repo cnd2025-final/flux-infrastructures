@@ -1,0 +1,11 @@
+---
+ingressClass:
+  enabled: true
+  isDefaultClass: false
+  name: traefik
+service.annotations:
+  metallb.universe.tf/loadBalancerIPs: 10.4.2.197
+additionalArguments:
+  - "--providers.kubernetesingress.ingressendpoint.publishedservice=traefik-system/traefik"
+  - "--entryPoints.web.forwardedHeaders.trustedIPs=10.4.2.0/24"
+  - "--entryPoints.web.proxyProtocol.trustedIPs=10.4.2.0/24"
